@@ -1,0 +1,34 @@
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local Window = Rayfield:CreateWindow({
+   Name = "Adz Hub | Fish It 🎣",
+   LoadingTitle = "Đang tải Adz Hub...",
+   LoadingSubtitle = "by Adz Developer",
+   ConfigurationSaving = { Enabled = true, FolderName = "AdzHubConfig", FileName = "FishIt" }
+})
+
+local MainTab = Window:CreateTab("Main", 4483362458)
+getgenv().AutoFish = false
+
+MainTab:CreateToggle({
+   Name = "Auto Fish (Tự động câu)",
+   CurrentValue = false,
+   Callback = function(Value)
+      getgenv().AutoFish = Value
+      task.spawn(function()
+         while getgenv().AutoFish do
+            local tool = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") or game.Players.LocalPlayer.Backpack:FindFirstChildOfClass("Tool")
+            if tool then 
+               game.Players.LocalPlayer.Character.Humanoid:EquipTool(tool)
+               tool:Activate() 
+            end
+            task.wait(1)
+         end
+      end)
+   end,
+})
+
+MainTab:CreateButton({
+   Name = "Speed Hack (50)",
+   Callback = function() game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 50 end,
+})
